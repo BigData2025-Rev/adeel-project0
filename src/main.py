@@ -1,3 +1,5 @@
+from colors import Color
+
 def main_menu() -> int:
     while(True):
         print("Menu")
@@ -5,13 +7,16 @@ def main_menu() -> int:
         print("1. Log In")
         print("2. Create Account")
         print("3. Exit")
-        login_screen_select = input("Selection: ")
+        login_screen_select = input("\nSelection: ")
 
-        if (int(login_screen_select) not in [1, 2, 3]):
-            print("Invalid Selection... Please try again.")
-            continue;
-        else:
-            return int(login_screen_select)
+        try:
+            if (int(login_screen_select) not in [1, 2, 3]):
+                print('\n' + Color.RED + "Invalid Selection... Please try again." + Color.END + '\n')
+                continue;
+            else:
+                return int(login_screen_select)
+        except:
+            print('\n' + Color.RED + "Invalid Input... Please enter a number." + Color.END + '\n')
 
 
 def main():
@@ -19,6 +24,13 @@ def main():
 
     main_menu_option = main_menu()
 
-    print (main_menu_option)
+    if (main_menu_option == 1):
+        print("Logging in...")
+    elif (main_menu_option == 2):
+        print("Register...")
+    else:
+        print("\nHave a good day!\n")
+        exit()
+
 
 main()
