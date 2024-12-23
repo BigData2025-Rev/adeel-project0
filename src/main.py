@@ -7,12 +7,14 @@ def main():
 
     main_menu_option = menu.main_menu()
 
+    current_user = ""
+
     if main_menu_option == 1:
         print("Logging in...")
-        account.log_in()
+        current_user = account.log_in()
     elif main_menu_option == 2:
         print("Register...")
-        account.register()
+        current_user = account.register()
     else:
         print("\nHave a good day!\n")
         sys.exit()

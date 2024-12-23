@@ -15,7 +15,6 @@ def save_account(account):
     with open(ACCOUNT_FILE, 'w') as file:
         json.dump(account, file, indent=4)
 
-
 def log_in():
     accounts = load_accounts()
 
@@ -35,9 +34,8 @@ def log_in():
             break
         else:
             print('\n' + Color.RED + "Username or password incorrect. Please try again..." + Color.END + '\n')
-
-
-
+    
+    return username
 
 def register():
     accounts = load_accounts()
@@ -88,3 +86,5 @@ def register():
     save_account(accounts)
 
     print('Registered!')
+
+    return username
