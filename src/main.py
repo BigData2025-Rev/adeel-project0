@@ -37,7 +37,7 @@ def main():
             elif bank_user_option == 4:
                 banking.transfer(current_user)
                 Messages.pause()
-            elif (bank_user_option == 6):
+            elif (bank_user_option == 5):
                 Messages.standard("Have a good day!")
                 sys.exit()
     else:

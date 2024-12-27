@@ -93,4 +93,28 @@ def transfer(username):
             f"Your new {destination.upper()} balance is ${destination_new_balance:.2f}"
         )
     else:
-        pass
+        while True:
+            other_user = input("Please enter the username of who your are transferring to: ")
+            if other_user not in accounts:
+                Messages.error(f"Could not find user {other_user}... Please try again")
+                continue
+            if "checking" not in accounts[other_user]["accounts"]:
+                Messages.error(f"User {other_user} does not have a checking account. Please try again.")
+                continue
+            break
+        account_list = list(user_account.keys())
+        selected = account_select_menu(account_list)
+        balance = user_account[selected]["balance"]
+
+        print(f"The current balance of your {selected.capitalize()} account is: ${balance:.2f}")
+
+        amount = amount_transfer_menu(balance)
+
+        user_account[selected]["balance"] -= amount
+        accounts[other_user]["accounts"]["checking"]["balance"] += amount
+
+        origin_new_balance = user_account[selected]["balance"]
+        print(
+            f"Successfully transferred ${amount:.2f} from your {selected.upper()} account.\n"
+            f"Your new {selected.upper()} account balance is: ${origin_new_balance:.2f}"
+        )

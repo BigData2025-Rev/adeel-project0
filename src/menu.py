@@ -28,12 +28,11 @@ def bank_menu() -> int:
         print("2. Deposit Funds")
         print("3. Withdraw Funds")
         print("4. Transfer Funds")
-        print("5. Transaction Log")
-        print("6. Exit Application")
+        print("5. Exit Application")
         bank_screen_select = input("\nSelection: ")
 
         try:
-            if (int(bank_screen_select) not in [1, 2, 3, 4, 5, 6]):
+            if (int(bank_screen_select) not in [1, 2, 3, 4, 5]):
                 Messages.error("Invalid Selection... Please try again.")
                 continue
             return int(bank_screen_select)
@@ -107,6 +106,7 @@ def transfer_multaccounts_menu():
             return int(user_choice)
         except ValueError:
             Messages.error("Invalid Input... Please enter a number.")
+
 
 
 # ACCOUNT MENUS
