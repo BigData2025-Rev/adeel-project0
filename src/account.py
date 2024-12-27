@@ -1,6 +1,7 @@
 import json
 import os
-from colors import Color
+from menu import login_form
+from colors import Messages
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ACCOUNT_FILE = os.path.join(BASE_DIR, "../data/accounts.json")
@@ -18,35 +19,25 @@ def save_account(account):
 def log_in():
     accounts = load_accounts()
 
-    print("Log In")
-
     while True:
-        print("================")
-        username = input("Enter Username: ")
-        password = input("Enter Password: ")
-
-        if username not in accounts:
-            print('\n' + Color.RED + "Username or password incorrect. Please try again..." + Color.END + '\n')
-            continue
+        username, password = login_form()
         
-        if accounts[username]["password"] == password:
-            print(f"Welcome back, {username}!")
+        if username not in accounts or accounts[username]["password"] != password:
+            Messages.error("Username or password incorrect. Please try again...")
             break
         else:
-            print('\n' + Color.RED + "Username or password incorrect. Please try again..." + Color.END + '\n')
-    
-    return username
+            print(f"Welcome back, {username}!")
+            Messages.end_message()
+            return username
 
 def register():
     accounts = load_accounts()
-    print("\nRegister")
-    print("================")
 
     while True:
         username = input("Enter a username: ")
         
         if username in accounts:
-            print("Username already exists. Please try a different one.")
+            Messages.error("Username or password incorrect. Please try again...")
             continue
         break
     
@@ -55,11 +46,11 @@ def register():
         confirm_password = input("Confirm your password: ")
         if password == confirm_password:
             break
-        print('\n' + Color.RED + "Passwords do not match. Please try again." + Color.END + '\n')
+        Messages.error("Passwords do not match. Please try again.")
 
     while True:
         print("\nWhat type of account would you like?")
-        print("1. Checking 2. Savings 3. Both")
+        print("1. Checking\n2. Savings\n3. Both")
 
         user_accounts = {}
 
@@ -68,15 +59,14 @@ def register():
             user_accounts["checking"] = {"balance": 0.0}
             break
         elif (account_choice.lower().strip() in ['2', 's', 'saving', 'savings']):
-            user_accounts["savings"] = {"balance": 0.0, "rate": 3.9}
-            print('Your saving account interest rate is 3.9%')
+            user_accounts["savings"] = {"balance": 0.0}
             break
         elif (account_choice.lower().strip() in ['3', 'b', 'both']):
             user_accounts["savings"] = {"balance": 0.0, "rate": 3.9}
             user_accounts["checking"] = {"balance": 0.0}
             break
         else:
-            print('\n' + Color.RED + "Invalid Choice. Please try again..." + Color.END + '\n')
+            Messages.error("Invalid Choice. Please try again...")
 
     accounts[username] = {
         "password": password,
@@ -85,6 +75,6 @@ def register():
 
     save_account(accounts)
 
-    print('Registered!')
-
+    Messages.success("Account created!")
+    Messages.end_message()
     return username
