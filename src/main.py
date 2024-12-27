@@ -22,17 +22,21 @@ def main():
         sys.exit()
     
     # after login / register
-    if (current_user):
+    if current_user:
         while True:
             bank_user_option = menu.bank_menu()
-            if (bank_user_option == 1):
+            if bank_user_option == 1:
                 banking.view(current_user)
                 Messages.pause()
-            elif (bank_user_option == 2):
+            elif bank_user_option == 2:
                 banking.deposit(current_user)
                 Messages.pause()
-            elif (bank_user_option == 3):
+            elif bank_user_option == 3:
                 banking.withdraw(current_user)
+                Messages.pause()
+            elif bank_user_option == 4:
+                banking.transfer(current_user)
+                Messages.pause()
             elif (bank_user_option == 6):
                 Messages.standard("Have a good day!")
                 sys.exit()

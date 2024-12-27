@@ -44,7 +44,7 @@ def account_select_menu(account_list):
     print("\nYour Accounts:")
     i = 1
     for account_type in account_list:
-        print(f"{i}. {account_type}")
+        print(f"{i}. {account_type.upper()}")
         i+=1
     while True:
         try:
@@ -77,10 +77,36 @@ def amount_withdraw_menu(user_balance: int) -> int:
             if amount <= user_balance:
                 break
             else:
-                Messages.error("Invalid Input... Please enter a positive number.")
+                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance")
         except ValueError:
             Messages.error("Invalid Input... Please enter a number.")
     return amount
+
+def amount_transfer_menu(user_balance: int) -> int:
+    while True:
+        try:
+            amount = float(input("Enter the amount you would like to transfer: $"))
+            if amount <= user_balance:
+                break
+            else:
+                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance")
+        except ValueError:
+            Messages.error("Invalid Input... Please enter a number.")
+    return amount
+
+def transfer_multaccounts_menu():
+    while True:
+        print("1. Transfer between your accounts")
+        print("2. Transfer to another user")
+        user_choice = input("\nSelection: ")
+
+        try:
+            if (int(user_choice) not in [1, 2]):
+                Messages.error("Invalid Selection... Please try again.")
+                continue
+            return int(user_choice)
+        except ValueError:
+            Messages.error("Invalid Input... Please enter a number.")
 
 
 # ACCOUNT MENUS
