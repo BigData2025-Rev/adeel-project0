@@ -1,0 +1,14 @@
+{
+    "test": {
+        "password": "test",
+        "accounts": {
+            "savings": {
+                "balance": 10.0,
+                "rate": 3.9
+            },
+            "checking": {
+                "balance": 100.0
+            }
+        }
+    }
+}
