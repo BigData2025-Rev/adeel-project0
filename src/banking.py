@@ -44,6 +44,6 @@ def withdraw(username):
 
     save_account(accounts)
     new_balance = user_account[selected]["balance"]
-    print(f"Successfully withdrew ${amount:.2f} from your {selected} account.\nYour new {selected} balance is ${new_balance:.2f}")
+    print(f"Successfully withdrew ${amount:.2f} from your {selected.upper()} account.\nYour new {selected.upper()} balance is ${new_balance:.2f}")
     Messages.end_message()
 
