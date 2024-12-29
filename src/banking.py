@@ -24,8 +24,25 @@ def deposit(username):
 
     Messages.title("Deposit")
 
+    print("Type 'exit' to exit.")
     selected = account_select_menu(account_list)
-    amount = amount_deposit_menu()
+    if selected == "exit":
+        Messages.standard("Cancelled... Returning to bank menu.")
+        return
+
+    while True:
+        amount_input = input("Enter the amount you would like to deposit: $")
+        if amount_input.lower() == "exit":
+            Messages.standard("Cancelled... Returning to bank menu.")
+            return
+        try:
+            amount = float(amount_input)
+            if amount > 0:
+                break
+            else:
+                Messages.error("Invalid Input... Please enter a positive number.")
+        except ValueError:
+            Messages.error("Invalid Input... Please enter a number.")
 
     user_account[selected]["balance"] += amount
 
@@ -37,13 +54,30 @@ def deposit(username):
 def withdraw(username):
     accounts = load_accounts()
     user_account = accounts[username]["accounts"]
-    balance = int(user_account[selected]["balance"])
     account_list = list(user_account.keys())
 
     Messages.title("Withdraw")
 
+    print("Type 'exit' to exit.")
     selected = account_select_menu(account_list)
-    amount = amount_withdraw_menu(balance)
+    if selected == "exit":
+        Messages.standard("Cancelled... Returning to bank menu.")
+        return
+
+    balance = float(user_account[selected]["balance"])
+    while True:
+        amount_input = input("Enter the amount you would like to withdraw: $")
+        if amount_input.lower() == "exit":
+            Messages.standard("Cancelled... Returning to bank menu.")
+            return
+        try:
+            amount = float(amount_input)
+            if 0 < amount <= balance:
+                break
+            else:
+                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance.")
+        except ValueError:
+            Messages.error("Invalid Input... Please enter a number.")
 
     user_account[selected]["balance"] -= amount
 
@@ -58,19 +92,36 @@ def transfer(username):
 
     Messages.title("Transfer")
 
-    if (len(user_account) > 1):
+    print("Type 'exit' to exit.")
+    if len(user_account) > 1:
         transfer_account_choice = transfer_multaccounts_menu()
     else:
         transfer_account_choice = 2
-    
-    if (transfer_account_choice == 1):
+
+    if transfer_account_choice == 1:
         account_list = list(user_account.keys())
         selected = account_select_menu(account_list)
+        if selected == "exit":
+            Messages.standard("Cancelled... Returning to bank menu.")
+            return
+
         balance = user_account[selected]["balance"]
 
         print(f"The current balance of your {selected.capitalize()} account is: ${balance:.2f}")
 
-        amount = amount_transfer_menu(balance)
+        while True:
+            amount_input = input("Enter the amount you would like to transfer: $")
+            if amount_input.lower() == "exit":
+                Messages.standard("Cancelled... Returning to bank menu.")
+                return
+            try:
+                amount = float(amount_input)
+                if 0 < amount <= balance:
+                    break
+                else:
+                    Messages.error("Invalid Input... Please enter an amount less than or equal to your balance.")
+            except ValueError:
+                Messages.error("Invalid Input... Please enter a number.")
 
         user_account[selected]["balance"] -= amount
 
@@ -82,9 +133,9 @@ def transfer(username):
         else:
             user_account["checking"]["balance"] += amount
             destination = "checking"
-            origin_new_balance = int(user_account[selected]["balance"])
-            destination_new_balance = int(user_account["checking"]["balance"])
-        
+            origin_new_balance = user_account[selected]["balance"]
+            destination_new_balance = user_account["checking"]["balance"]
+
         save_account(accounts)
 
         print(
@@ -94,26 +145,47 @@ def transfer(username):
         )
     else:
         while True:
-            other_user = input("Please enter the username of who your are transferring to: ")
+            other_user = input("Please enter the username of who you are transferring to: ")
+            if other_user.lower() == "exit":
+                Messages.standard("Cancelled... Returning to bank menu.")
+                return
             if other_user not in accounts:
-                Messages.error(f"Could not find user {other_user}... Please try again")
+                Messages.error(f"Could not find user {other_user}... Please try again.")
                 continue
             if "checking" not in accounts[other_user]["accounts"]:
                 Messages.error(f"User {other_user} does not have a checking account. Please try again.")
                 continue
             break
+
         account_list = list(user_account.keys())
         selected = account_select_menu(account_list)
+        if selected == "exit":
+            Messages.standard("Cancelled... Returning to bank menu.")
+            return
+
         balance = user_account[selected]["balance"]
 
         print(f"The current balance of your {selected.capitalize()} account is: ${balance:.2f}")
 
-        amount = amount_transfer_menu(balance)
+        while True:
+            amount_input = input("Enter the amount you would like to transfer: $")
+            if amount_input.lower() == "exit":
+                Messages.standard("Cancelled... Returning to bank menu.")
+                return
+            try:
+                amount = float(amount_input)
+                if 0 < amount <= balance:
+                    break
+                else:
+                    Messages.error("Invalid Input... Please enter an amount less than or equal to your balance.")
+            except ValueError:
+                Messages.error("Invalid Input... Please enter a number.")
 
         user_account[selected]["balance"] -= amount
         accounts[other_user]["accounts"]["checking"]["balance"] += amount
 
         origin_new_balance = user_account[selected]["balance"]
+        save_account(accounts)
         print(
             f"Successfully transferred ${amount:.2f} from your {selected.upper()} account.\n"
             f"Your new {selected.upper()} account balance is: ${origin_new_balance:.2f}"

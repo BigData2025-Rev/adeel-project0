@@ -28,7 +28,7 @@ def bank_menu() -> int:
         print("2. Deposit Funds")
         print("3. Withdraw Funds")
         print("4. Transfer Funds")
-        print("5. Exit Application")
+        print("5. Exit Menu")
         bank_screen_select = input("\nSelection: ")
 
         try:
@@ -44,23 +44,29 @@ def account_select_menu(account_list):
     i = 1
     for account_type in account_list:
         print(f"{i}. {account_type.upper()}")
-        i+=1
+        i += 1
     while True:
+        account_choice = input("Please select an account (or type 'exit' to exit): ").strip()
+        if account_choice.lower() == "exit":
+            return "exit"
         try:
-            account_choice = int(input("Please select an account: "))
-            if (account_choice) not in range(1, i):
+            account_choice = int(account_choice)
+            if account_choice not in range(1, i):
                 Messages.error("Invalid Selection... Please try again.")
             else:
                 break
         except ValueError:
             Messages.error("Invalid Input... Please enter a number.")
-    selected = account_list[account_choice-1]
+    selected = account_list[account_choice - 1]
     return selected
 
 def amount_deposit_menu() -> int:
     while True:
+        amount_input = input("Enter the amount you would like to deposit (or type 'exit' to exit): ").strip()
+        if amount_input.lower() == "exit":
+            return "exit"
         try:
-            amount = float(input("Enter the amount you would like to deposit: $"))
+            amount = float(amount_input)
             if amount > 0:
                 break
             else:
@@ -71,24 +77,30 @@ def amount_deposit_menu() -> int:
 
 def amount_withdraw_menu(user_balance: int) -> int:
     while True:
+        amount_input = input("Enter the amount you would like to withdraw (or type 'exit' to exit): ").strip()
+        if amount_input.lower() == "exit":
+            return "exit"
         try:
-            amount = float(input("Enter the amount you would like to withdraw: $"))
-            if amount <= user_balance:
+            amount = float(amount_input)
+            if 0 < amount <= user_balance:
                 break
             else:
-                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance")
+                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance.")
         except ValueError:
             Messages.error("Invalid Input... Please enter a number.")
     return amount
 
 def amount_transfer_menu(user_balance: int) -> int:
     while True:
+        amount_input = input("Enter the amount you would like to transfer (or type 'exit' to exit): ").strip()
+        if amount_input.lower() == "exit":
+            return "exit"
         try:
-            amount = float(input("Enter the amount you would like to transfer: $"))
-            if amount <= user_balance:
+            amount = float(amount_input)
+            if 0 < amount <= user_balance:
                 break
             else:
-                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance")
+                Messages.error("Invalid Input... Please enter an amount less than or equal to your balance.")
         except ValueError:
             Messages.error("Invalid Input... Please enter a number.")
     return amount
@@ -97,13 +109,15 @@ def transfer_multaccounts_menu():
     while True:
         print("1. Transfer between your accounts")
         print("2. Transfer to another user")
-        user_choice = input("\nSelection: ")
-
+        user_choice = input("Selection (or type 'exit' to exit): ").strip()
+        if user_choice.lower() == "exit":
+            return "exit"
         try:
-            if (int(user_choice) not in [1, 2]):
+            user_choice = int(user_choice)
+            if user_choice not in [1, 2]:
                 Messages.error("Invalid Selection... Please try again.")
-                continue
-            return int(user_choice)
+            else:
+                return user_choice
         except ValueError:
             Messages.error("Invalid Input... Please enter a number.")
 
@@ -115,5 +129,9 @@ def login_form():
 
     username = input("Enter Username: ")
     password = input("Enter Password: ")
+
+    if not username or not password:
+        Messages.error("Username and Password cannot be empty.")
+        return login_form()
 
     return username, password

@@ -20,15 +20,18 @@ def log_in():
     accounts = load_accounts()
 
     while True:
-        username, password = login_form()
-        
-        if username not in accounts or accounts[username]["password"] != password:
-            Messages.error("Username or password incorrect. Please try again...")
-            break
-        else:
-            print(f"Welcome back, {username}!")
-            Messages.end_message()
-            return username
+        retry_count = 3
+        while retry_count > 0:
+            username, password = login_form()
+            if username not in accounts or accounts[username]["password"] != password:
+                retry_count -= 1
+                Messages.error(f"Username or password incorrect. {retry_count} attempts left...")
+            else:
+                print(f"Welcome back, {username}!")
+                Messages.end_message()
+                return username
+        Messages.error("Too many failed login attempts. Please try again later.")
+        return None
 
 def register():
     accounts = load_accounts()
@@ -62,7 +65,7 @@ def register():
             user_accounts["savings"] = {"balance": 0.0}
             break
         elif (account_choice.lower().strip() in ['3', 'b', 'both']):
-            user_accounts["savings"] = {"balance": 0.0, "rate": 3.9}
+            user_accounts["savings"] = {"balance": 0.0}
             user_accounts["checking"] = {"balance": 0.0}
             break
         else:
