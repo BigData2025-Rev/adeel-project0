@@ -42,6 +42,8 @@ def main():
                 elif (bank_user_option == 5):
                     Messages.standard("Returning to main menu...")
                     break
+        elif current_user is None:
+            pass
         else:
             Messages.error("Unknown Error, exiting...")
             sys.exit()
