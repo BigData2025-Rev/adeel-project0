@@ -9,7 +9,7 @@ def main():
     current_user = ""
 
     # MENU TITLE
-    Messages.title("Bank App")
+    Messages.title("Simple Bank")
 
     # MENU LOOP
     while True: 
