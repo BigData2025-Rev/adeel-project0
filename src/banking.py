@@ -107,7 +107,7 @@ def transfer(username):
 
         balance = user_account[selected]["balance"]
 
-        print(f"The current balance of your {selected.capitalize()} account is: ${balance:.2f}")
+        print(f"The current balance of your {selected.upper()} account is: ${balance:.2f}")
 
         while True:
             amount_input = input("Enter the amount you would like to transfer: $")
@@ -165,7 +165,7 @@ def transfer(username):
 
         balance = user_account[selected]["balance"]
 
-        print(f"The current balance of your {selected.capitalize()} account is: ${balance:.2f}")
+        print(f"The current balance of your {selected.upper()} account is: ${balance:.2f}")
 
         while True:
             amount_input = input("Enter the amount you would like to transfer: $")

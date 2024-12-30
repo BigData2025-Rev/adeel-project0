@@ -16,7 +16,7 @@ def save_account(account):
     with open(ACCOUNT_FILE, 'w') as file:
         json.dump(account, file, indent=4)
 
-def log_in():
+def log_in() -> str:
     accounts = load_accounts()
 
     while True:
@@ -33,7 +33,7 @@ def log_in():
         Messages.error("Too many failed login attempts. Please try again later.")
         return None
 
-def register():
+def register() -> str:
     accounts = load_accounts()
 
     while True:
