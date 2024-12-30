@@ -105,7 +105,7 @@ def amount_transfer_menu(user_balance: int) -> int:
             Messages.error("Invalid Input... Please enter a number.")
     return amount
 
-def transfer_multaccounts_menu():
+def transfer_multaccounts_menu() -> int:
     while True:
         print("1. Transfer between your accounts")
         print("2. Transfer to another user")
@@ -124,7 +124,7 @@ def transfer_multaccounts_menu():
 
 
 # ACCOUNT MENUS
-def login_form():
+def login_form() -> str:
     Messages.title("Login")
 
     username = input("Enter Username: ")

@@ -6,16 +6,16 @@ class Color:
 
 class Messages:
     def error(message: str):
-        print('\n' + Color.RED + message + Color.END + '\n')
+        print("\n"  + Color.RED + message + Color.END + "\n" )
     def success(message: str):
-        print('\n' + Color.GREEN + message + Color.END + '\n')
+        print("\n" + Color.GREEN + message + Color.END + "\n" )
     def standard(message: str):
-        print('\n' + Color.CYAN + message + Color.END + '\n')
+        print("\n"  + Color.CYAN + message + Color.END + "\n" )
     def title(message: str):
-        print('================')
+        print("================")
         print(message.center(16))
-        print('================')
+        print("================")
     def pause():
         input('Press ENTER to continue... ')
     def end_message():
-        print('================\n')
+        print("================\n")
