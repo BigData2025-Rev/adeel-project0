@@ -5,16 +5,17 @@ import banking
 from colors import Messages
 
 def main():
-    # hold current username (authenticated)
+    # CURRENT AUTHENTICATED USER
     current_user = ""
 
-    # Main menu
+    # MENU TITLE
     Messages.title("Bank App")
 
-    while True:
+    # MENU LOOP
+    while True: 
         main_menu_option = menu.main_menu()
 
-
+        # MAIN MENU SELECT
         if main_menu_option == 1:
             current_user = account.log_in()
         elif main_menu_option == 2:
@@ -23,7 +24,8 @@ def main():
             Messages.standard("Have a good day!")
             sys.exit()
         
-        # after login / register
+        # IF AUTHENTICATED -> BANK MENU
+        # ELSE -> BACK TO MAIN MENU
         if current_user:
             while True:
                 bank_user_option = menu.bank_menu()
